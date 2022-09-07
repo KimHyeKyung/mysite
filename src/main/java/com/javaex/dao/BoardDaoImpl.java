@@ -102,61 +102,6 @@ public List<BoardVo> getBoardList(String keyField, String keyWord, int start, in
 }
 /////////////////////////////////////새로만든영역 끝/////////////////////////////////////////
 
-/*
-	public List<BoardVo> getList() {
-
-		// 0. import java.sql.*;
-		Connection conn = null;
-		PreparedStatement pstmt = null;
-		ResultSet rs = null;
-		List<BoardVo> list = new ArrayList<BoardVo>();
-
-		try {
-			conn = getConnection();
-
-			// 3. SQL문 준비 / 바인딩 / 실행
-			String query = "select b.no, b.title, b.hit, to_char(b.reg_date,'yy-mm-dd hh24:mi') reg_date, b.user_no, u.name "
-						 + " from board b, users u "
-						 + " where b.user_no = u.no "
-						 + " order by no desc";
-
-			pstmt = conn.prepareStatement(query);
-
-			rs = pstmt.executeQuery();
-			// 4.결과처리
-			while (rs.next()) {
-				int no = rs.getInt("no");
-				String title = rs.getString("title");
-				int hit = rs.getInt("hit");
-				String reg_date = rs.getString("reg_date");
-				int user_no = rs.getInt("user_no");
-				String user_name = rs.getString("name");
-
-				BoardVo vo = new BoardVo(no, title, hit, reg_date, user_no, user_name);
-				list.add(vo);
-			}
-
-		} catch (SQLException e) {
-			System.out.println("error:" + e);
-		} finally {
-			// 5. 자원정리
-			try {
-				if (pstmt != null) {
-					pstmt.close();
-				}
-				if (conn != null) {
-					conn.close();
-				}
-			} catch (SQLException e) {
-				System.out.println("error:" + e);
-			}
-
-		}
-
-		return list;
-
-	}
-*/
 	// read
 	public BoardVo getBoard(int no) {
 

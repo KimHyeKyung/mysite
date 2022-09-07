@@ -44,7 +44,7 @@ pageContext.setAttribute( "newLine", "\n" );
 					</tr>
 				</table>
 				<div class="bottom">
-					<a href="/mysite/board">글목록</a>
+					<a href="/mysite/board?a=list&nowPage=${savePagenum}">글목록</a>
 
 					<c:if test="${authUser.no == boardVo.user_no}">
 						<a href="/mysite/board?a=modifyform&no=${boardVo.no}">글수정</a>

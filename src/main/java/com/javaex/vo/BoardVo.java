@@ -33,7 +33,6 @@ public class BoardVo {
 	private int pageStart;
 	private int pageEnd;
 	
-	
 	public BoardVo() {
 		super();
 	}

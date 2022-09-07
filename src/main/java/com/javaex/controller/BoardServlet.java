@@ -13,6 +13,8 @@ import javax.servlet.http.HttpSession;
 
 import com.javaex.dao.BoardDao;
 import com.javaex.dao.BoardDaoImpl;
+import com.javaex.dao.UserDao;
+import com.javaex.dao.UserDaoImpl;
 import com.javaex.util.WebUtil;
 import com.javaex.vo.BoardVo;
 import com.javaex.vo.UserVo;
@@ -21,6 +23,8 @@ import com.javaex.vo.UserVo;
 public class BoardServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
+	String savePagenum ; 
+	
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)throws ServletException, IOException {
 		request.setCharacterEncoding("UTF-8");
 		String actionName = request.getParameter("a");
@@ -68,7 +72,9 @@ public class BoardServlet extends HttpServlet {
 
 		totalBlock = (int) Math.ceil((double) totalPage / pagePerBlock); // 전체블럭계산
 		
+		
 		if ("list".equals(actionName)) {
+
 			//List<BoardVo> list = dao.getList();
 			// 리스트 화면에 보내기
 			//request.setAttribute("list", list);
@@ -79,12 +85,21 @@ public class BoardServlet extends HttpServlet {
 			end = numPerPage;
 			List<BoardVo> vlist = dao.getBoardList(keyField, keyWord, start, end);
 			
+			//현재 몇번째 메이지인지 페이지 값 저장하기 위한 처리
+			//두번째 페이지에서 글 목록 눌렀을때 두번째 페이지로 되돌아가기위해서!
+			savePagenum =Integer.toString(nowPage);
+			
 			// 리스트 화면에 보내기
 			request.setAttribute("list", vlist);
 			RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/views/board/list.jsp");
 			rd.forward(request, response);
 			
 		} else if ("read".equals(actionName)) {
+			//세션에 저장
+			System.out.println("savePagenum read : "+savePagenum);
+			HttpSession session = request.getSession(true);
+			session.setAttribute("savePagenum", savePagenum);
+			
 			// 게시물 가져오기
 			int no = Integer.parseInt(request.getParameter("no"));
 			BoardVo boardVo = dao.getBoard(no);
