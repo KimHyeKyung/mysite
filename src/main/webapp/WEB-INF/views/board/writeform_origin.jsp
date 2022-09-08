@@ -27,10 +27,8 @@
 							<td><input type="text" name="title" value=""></td>
 						</tr>
 						<tr>
-							<td class="label">파일</td>
-							<td>
-     							<input type="file" name="filename" size="50" maxlength="50">
-							</td>
+							<td class="label">첨부파일</td>
+							<td><input type="file" name="filename" size="50" maxlength="50"></td>
 						</tr>
 						<tr>
 							<td class="label">내용</td>

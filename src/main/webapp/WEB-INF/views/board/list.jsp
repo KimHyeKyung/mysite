@@ -51,7 +51,6 @@ function check() { // 검색어 입력 여부 확인
 			}
 		}
 	}
-	alert(document.searchFrm.keyWord.value);
 	document.searchFrm.action = "/mysite/board?a=list";
 	document.searchFrm.submit();
 }

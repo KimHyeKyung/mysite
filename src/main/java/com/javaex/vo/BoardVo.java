@@ -11,27 +11,12 @@ public class BoardVo {
 	private String reg_date;
 	
 	//DB에 추가된 컬럼
-	private int pos;	//게시물의 상대적인 위치 값을 저장하여 화면에 순서대로 뿌려주는 역할을 담당하는 칼럼입니다.
-	private int depth;	//게시물이 답변 글일 경우 답변의 깊이를 저장하는 칼럼
-	private int ref;	//게시물이 답변 글일 경우 소속된 부모 글을 가리키는 번호를 저장하는 칼럼
-	private String filename; //업로드된 파일의 이름을 저장하는 칼럼
-	private int filesize;	//업로드 된 파일의 크기를 저장하는 칼럼
-	
-	//페이징을 위해 BoardVo에만 추가한 컬럼
-	private int totalRecord; 	// 전체레코드수
-	private int numPerPage; 	// 페이지당 레코드 수
-	private int pagePerBlock; 	// 블럭당 페이지수
-	private int totalPage; 		// 전체 페이지 수
-	private int totalBlock; 	// 전체 블럭수
-	private int nowPage; 		// 현재페이지
-	private int nowBlock; 		// 현재블럭
-	private int start; 			// 디비의 select 시작번호
-	private int end; 			// 시작번호로 부터 가져올 select 갯수
-	private int listSize; 		// 현재 읽어온 게시물의 수
-	private String keyWord;
-	private String keyField;
-	private int pageStart;
-	private int pageEnd;
+	private int pos;				//게시물의 상대적인 위치 값을 저장하여 화면에 순서대로 뿌려주는 역할을 담당하는 칼럼입니다.
+	private int depth;				//게시물이 답변 글일 경우 답변의 깊이를 저장하는 칼럼
+	private int ref;				//게시물이 답변 글일 경우 소속된 부모 글을 가리키는 번호를 저장하는 칼럼
+	private String filename; 		//업로드된 파일의 이름을 저장하는 칼럼
+	private String new_filename;	//업로드된 파일 이름 재 설정
+	private int filesize;			//업로드 된 파일의 크기를 저장하는 칼럼
 	
 	public BoardVo() {
 		super();
@@ -97,6 +82,14 @@ public class BoardVo {
 		this.ref = ref;
 		this.filename = filename;
 		this.filesize = filesize;
+	}
+
+	public BoardVo(String title, String content, int user_no, String filename, String new_filename) {
+		super();
+		this.title = title;
+		this.content = content;
+		this.user_no = user_no;
+		this.filename = filename;
 	}
 
 	public int getNo() {
@@ -187,125 +180,21 @@ public class BoardVo {
 		this.filesize = filesize;
 	}
 
-	//페이징을 위해 BoardVo에만 추가한 컬럼
-	public int getTotalRecord() {
-		return totalRecord;
+	public String getNew_filename() {
+		return new_filename;
 	}
 
-	public void setTotalRecord(int totalRecord) {
-		this.totalRecord = totalRecord;
+	public void setNew_filename(String new_filename) {
+		this.new_filename = new_filename;
 	}
-
-	public int getNumPerPage() {
-		return numPerPage;
-	}
-
-	public void setNumPerPage(int numPerPage) {
-		this.numPerPage = numPerPage;
-	}
-
-	public int getPagePerBlock() {
-		return pagePerBlock;
-	}
-
-	public void setPagePerBlock(int pagePerBlock) {
-		this.pagePerBlock = pagePerBlock;
-	}
-
-	public int getTotalPage() {
-		return totalPage;
-	}
-
-	public void setTotalPage(int totalPage) {
-		this.totalPage = totalPage;
-	}
-
-	public int getTotalBlock() {
-		return totalBlock;
-	}
-
-	public void setTotalBlock(int totalBlock) {
-		this.totalBlock = totalBlock;
-	}
-
-	public int getNowPage() {
-		return nowPage;
-	}
-
-	public void setNowPage(int nowPage) {
-		this.nowPage = nowPage;
-	}
-
-	public int getNowBlock() {
-		return nowBlock;
-	}
-
-	public void setNowBlock(int nowBlock) {
-		this.nowBlock = nowBlock;
-	}
-
-	public int getStart() {
-		return start;
-	}
-
-	public void setStart(int start) {
-		this.start = start;
-	}
-
-	public int getEnd() {
-		return end;
-	}
-
-	public void setEnd(int end) {
-		this.end = end;
-	}
-
-	public int getListSize() {
-		return listSize;
-	}
-
-	public void setListSize(int listSize) {
-		this.listSize = listSize;
-	}
-
-	public String getKeyWord() {
-		return keyWord;
-	}
-
-	public void setKeyWord(String keyWord) {
-		this.keyWord = keyWord;
-	}
-
-	public String getKeyField() {
-		return keyField;
-	}
-
-	public void setKeyField(String keyField) {
-		this.keyField = keyField;
-	}
-
-	public int getPageStart() {
-		return pageStart;
-	}
-
-	public void setPageStart(int pageStart) {
-		this.pageStart = pageStart;
-	}
-
-	public int getPageEnd() {
-		return pageEnd;
-	}
-
-	public void setPageEnd(int pageEnd) {
-		this.pageEnd = pageEnd;
-	}
-
 
 	@Override
 	public String toString() {
 		return "BoardVo [no=" + no + ", user_name=" + user_name + ", title=" + title + ", content=" + content + ", hit="
 				+ hit + ", user_no=" + user_no + ", reg_date=" + reg_date + ", pos=" + pos + ", depth=" + depth
-				+ ", ref=" + ref + ", filename=" + filename + ", filesize=" + filesize + "]";
+				+ ", ref=" + ref + ", filename=" + filename + ", new_filename=" + new_filename + ", filesize="
+				+ filesize + "]";
 	}
 
+	
 }

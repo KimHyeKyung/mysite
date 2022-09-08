@@ -8,6 +8,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.javaex.vo.BoardVo;
+import com.javaex.vo.UserVo;
 
 public class BoardDaoImpl implements BoardDao {
 	private DBConnectionMgr pool;
@@ -31,30 +32,30 @@ public class BoardDaoImpl implements BoardDao {
 				conn = pool.getConnection();
 				// 3. SQL문 준비 / 바인딩 / 실행
 				if (keyWord.equals("null") || keyWord.equals("")) {
-					String query =  "SELECT * \r\n" 
+					String query =  "SELECT B.* \r\n" 
 									+"FROM( \r\n"
 									+"		SELECT ROWNUM AS RNUM, A.* \r\n"
-									+"	  	FROM (	select b.no, b.title, b.hit, to_char(b.reg_date,'yy-mm-dd hh24:mi') reg_date, b.user_no, b.pos, b.ref, b.depth, u.name AS name	\r\n"
+									+"	  	FROM (	select b.no, b.title, b.hit, to_char(b.reg_date,'yy-mm-dd hh24:mi') reg_date, b.user_no, b.pos, b.ref, b.depth, u.name\r\n"
 									+"				from board b, users u	\r\n"
-									+"				where b.user_no = u.NO order by ref desc, pos ) A	\r\n"
+									+"				where b.user_no = u.NO order by b.reg_date desc) A	\r\n"
 									+"	  	WHERE ROWNUM <= ?+?	\r\n"
-									+"	    )	\r\n"
-									+"WHERE RNUM > ?	\r\n";
+									+"	    )B	\r\n"
+									+"WHERE B.RNUM > ?	\r\n";
 				
 				pstmt = conn.prepareStatement(query);
 				pstmt.setInt(1, start);
 		        pstmt.setInt(2, end);
 		        pstmt.setInt(3, start);
 				} else {
-					String query =  "SELECT * \r\n" 
+					String query =  "SELECT B.* \r\n" 
 									+"FROM( \r\n"
 									+"		SELECT ROWNUM AS RNUM, A.* \r\n"
-									+"	  	FROM (	select b.no, b.title, b.hit, to_char(b.reg_date,'yy-mm-dd hh24:mi') reg_date, b.user_no, b.pos, b.ref, b.depth, u.name AS name	\r\n"
+									+"	  	FROM (	select b.no, b.title, b.hit, to_char(b.reg_date,'yy-mm-dd hh24:mi') reg_date, b.user_no, b.pos, b.ref, b.depth, u.name \r\n"
 									+"				from board b, users u	\r\n"
-									+"				where "+ keyField +" like ? and b.user_no = u.NO  order by ref desc, pos ) A	\r\n"
+									+"				where "+ keyField +" like ? and b.user_no = u.NO  order by b.reg_date desc) A	\r\n"
 									+"	  	WHERE ROWNUM <= ?+?	\r\n"
-									+"	      )	\r\n"
-									+"	WHERE RNUM > ?	\r\n";
+									+"	      )B	\r\n"
+									+"WHERE B.RNUM > ?	\r\n";
 					pstmt = conn.prepareStatement(query);
 					pstmt.setString(1, "%" + keyWord + "%");
 					pstmt.setInt(2, start);
@@ -64,11 +65,10 @@ public class BoardDaoImpl implements BoardDao {
 				
 				rs = pstmt.executeQuery();
 
-				// 4.결과처리
+				// 4.결과처리-
 				while (rs.next()) {
 					BoardVo vo = new BoardVo();
 					vo.setNo(rs.getInt("no"));
-					vo.setUser_name(rs.getString("name"));
 					vo.setUser_no(rs.getInt("user_no"));
 					vo.setTitle(rs.getString("title"));
 					vo.setPos(rs.getInt("pos"));
@@ -76,6 +76,8 @@ public class BoardDaoImpl implements BoardDao {
 					vo.setDepth(rs.getInt("depth"));
 					vo.setReg_date(rs.getString("reg_date"));
 					vo.setHit(rs.getInt("hit"));
+					vo.setUser_name(rs.getString("name"));
+					
 					list.add(vo);
 				}
 				
@@ -86,7 +88,7 @@ public class BoardDaoImpl implements BoardDao {
 			      e.printStackTrace();
 			    } finally {
 			      // 5. 자원정리
-			      try {
+			      try { 
 			        if (pstmt != null) {
 			          pstmt.close();
 			        }
@@ -101,7 +103,6 @@ public class BoardDaoImpl implements BoardDao {
 			    }
 			
 			return list;
-
 		}
 
 	
@@ -133,9 +134,9 @@ public class BoardDaoImpl implements BoardDao {
 				int hit = rs.getInt("hit");
 				String reg_date = rs.getString("reg_date");
 				int user_no = rs.getInt("user_no");
-				String user_name = rs.getString("name");
+				String name = rs.getString("name");
 				
-				boardVo = new BoardVo(no, title, content, hit, reg_date, user_no, user_name);
+				boardVo = new BoardVo(no, title, content, hit, reg_date, user_no, name);
 			}
 			
 		} catch (SQLException e) {
@@ -167,24 +168,16 @@ public class BoardDaoImpl implements BoardDao {
 		Connection conn = null;
 		PreparedStatement pstmt = null;
 		int count = 0;
-
 		try {
 		  conn = pool.getConnection();
-		  
-		  System.out.println("vo.user_no : ["+vo.getUser_no()+"]");
-	      System.out.println("vo.title : ["+vo.getTitle()+"]");
-	      System.out.println("vo.content : ["+vo.getContent()+"]");
-      
 			// 3. SQL문 준비 / 바인딩 / 실행
-			String query = "insert into board values (seq_board_no.nextval, ?, ?, 0, sysdate, ?)";
+			String query = 	"insert into board (no, title, content, hit, reg_date, user_no)"
+						  + "values (seq_board_no.nextval, ?, ?, 0, sysdate, ?)";
 			pstmt = conn.prepareStatement(query);
 
 			pstmt.setString(1, vo.getTitle());
 			pstmt.setString(2, vo.getContent());
 			pstmt.setInt(3, vo.getUser_no());
-			
-			
-      
 			count = pstmt.executeUpdate();
 
 			// 4.결과처리
@@ -205,6 +198,7 @@ public class BoardDaoImpl implements BoardDao {
 		          pool.freeConnection(conn);
 		        }
 		      } catch (SQLException e) {
+		    	  e.printStackTrace();
 		        System.out.println("error:" + e);
 		      }
 
@@ -355,7 +349,7 @@ public class BoardDaoImpl implements BoardDao {
 				sql = "select count(no) from Board";
 				pstmt = conn.prepareStatement(sql);
 			} else {
-				sql = "select count(no) from  Board where " + keyField + " like ? ";
+				sql = "select count(*) from  Board b, users u where b.user_no = u.NO and " + keyField + " like ? ";
 				pstmt = conn.prepareStatement(sql);
 				pstmt.setString(1, "%" + keyWord + "%");
 			}
