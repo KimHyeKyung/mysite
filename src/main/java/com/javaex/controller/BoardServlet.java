@@ -114,7 +114,6 @@ public class BoardServlet extends HttpServlet {
 	    
 		} else if ("read".equals(actionName)) {
 			//세션에 저장
-			System.out.println("savePagenum read : "+savePagenum);
 			HttpSession session = request.getSession(true);
 			session.setAttribute("savePagenum", savePagenum);
 			

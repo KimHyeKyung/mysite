@@ -29,7 +29,8 @@
 						<tr>
 							<td class="label">파일</td>
 							<td>
-     							<input type="file" name="filename" size="50" maxlength="50">
+     							<input type="file" name="filename1" size="50" maxlength="50">
+     							<input type="file" name="filename2" size="50" maxlength="50" style="margin-top: 10px;">
 							</td>
 						</tr>
 						<tr>

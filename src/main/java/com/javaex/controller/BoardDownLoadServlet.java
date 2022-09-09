@@ -22,8 +22,8 @@ import com.javaex.util.WebUtil;
 import com.javaex.vo.BoardVo;
 import com.javaex.vo.UserVo;
 
-@WebServlet("/write")
-public class BoardWriteServlet extends HttpServlet {
+@WebServlet("/downLoad")
+public class BoardDownLoadServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	
 	private static final String CHARSET = "UTF-8";

@@ -13,6 +13,12 @@ pageContext.setAttribute( "newLine", "\n" );
 <link href="/mysite/assets/css/board.css" rel="stylesheet"
 	type="text/css">
 <title>Mysite</title>
+<script type="text/javascript">
+	function down(filename){
+		 document.downFrm.filename.value=filename;
+		 document.downFrm.submit();
+	}
+</script>
 </head>
 <body>
 	<div id="container">
@@ -36,9 +42,25 @@ pageContext.setAttribute( "newLine", "\n" );
 						<td>${boardVo.title}</td>
 					</tr>
 					<tr>
+						<td class="label">파일</td>
+						<td>
+							<c:if test="${boardVo.filename1 != null || boardVo.filename2 != null}">
+								<p>
+									<a href="javascript:down(${boardVo.filename1})">${boardVo.filename1}</a>
+								</p>
+								<p style="margin-top: 5px;">
+									<a href="javascript:down(${boardVo.filename2})">${boardVo.filename2}</a>
+								</p>
+							</c:if>
+							<c:if test="${boardVo.filename1 == null || boardVo.filename2 == null}">
+								<p>등록된 파일이 없습니다.</p>
+							</c:if>
+			  		 	</td>
+					</tr>
+					<tr>
 						<td class="label">내용</td>
 						<td>
-							<div class="view-content">${fn:replace(boardVo.content, newLine, "<br>")}
+							<div class="view-content" style="height: 80px;">${fn:replace(boardVo.content, newLine, "<br>")}
 							</div>
 						</td>
 					</tr>
@@ -52,7 +74,10 @@ pageContext.setAttribute( "newLine", "\n" );
 				</div>
 			</div>
 		</div>
-
+		<form name="downFrm" action="/mysite/downLoad" method="post">
+			<input type="hidden" name="filename1">
+			<input type="hidden" name="filename2">
+		</form>
 		<c:import url="/WEB-INF/views/includes/footer.jsp"></c:import>
 
 	</div>

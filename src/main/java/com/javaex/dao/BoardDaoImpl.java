@@ -8,7 +8,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.javaex.vo.BoardVo;
-import com.javaex.vo.UserVo;
 
 public class BoardDaoImpl implements BoardDao {
 	private DBConnectionMgr pool;
@@ -118,7 +117,7 @@ public class BoardDaoImpl implements BoardDao {
 		  conn = pool.getConnection();
 
 			// 3. SQL문 준비 / 바인딩 / 실행
-			String query = "select b.no, b.title, b.content, b.hit, b.reg_date, b.user_no, u.name "
+			String query = "select b.no, b.title, b.content, b.hit, b.reg_date, b.user_no, u.name, b.filename1, b.filename2 "
 					     + "from board b, users u "
 					     + "where b.user_no = u.no "
 					     + "and b.no = ?";
@@ -134,9 +133,11 @@ public class BoardDaoImpl implements BoardDao {
 				int hit = rs.getInt("hit");
 				String reg_date = rs.getString("reg_date");
 				int user_no = rs.getInt("user_no");
-				String name = rs.getString("name");
+				String user_name = rs.getString("name");
+				String filename1 = rs.getString("filename1");
+				String filename2 = rs.getString("filename2");
 				
-				boardVo = new BoardVo(no, title, content, hit, reg_date, user_no, name);
+				boardVo = new BoardVo(no, title, content, hit, reg_date, user_no, user_name, filename1, filename2);
 			}
 			
 		} catch (SQLException e) {
@@ -171,14 +172,16 @@ public class BoardDaoImpl implements BoardDao {
 		try {
 		  conn = pool.getConnection();
 			// 3. SQL문 준비 / 바인딩 / 실행
-			String query = 	"insert into board (no, user_no, title, content, filename, new_filename, hit, reg_date)"
-						  + "values (seq_board_no.nextval, ?, ?, ?, ?, ?, 0, sysdate)";
+			String query = 	"insert into board (no, user_no, title, content, filename1, filename2, new_filename1, new_filename2, hit, reg_date)"
+						  + "values (seq_board_no.nextval, ?, ?, ?, ?, ?, ?, ?, 0, sysdate)";
 			pstmt = conn.prepareStatement(query);
 			pstmt.setInt(1, vo.getUser_no());
 			pstmt.setString(2, vo.getTitle());
 			pstmt.setString(3, vo.getContent());
-			pstmt.setString(4, vo.getFilename());
-			pstmt.setString(5, vo.getNew_filename());
+			pstmt.setString(4, vo.getFilename1());
+			pstmt.setString(5, vo.getFilename2());
+			pstmt.setString(6, vo.getNew_filename1());
+			pstmt.setString(7, vo.getNew_filename2());
 			count = pstmt.executeUpdate();
 
 			// 4.결과처리
