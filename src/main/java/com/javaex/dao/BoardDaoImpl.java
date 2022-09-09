@@ -171,13 +171,14 @@ public class BoardDaoImpl implements BoardDao {
 		try {
 		  conn = pool.getConnection();
 			// 3. SQL문 준비 / 바인딩 / 실행
-			String query = 	"insert into board (no, title, content, hit, reg_date, user_no)"
-						  + "values (seq_board_no.nextval, ?, ?, 0, sysdate, ?)";
+			String query = 	"insert into board (no, user_no, title, content, filename, new_filename, hit, reg_date)"
+						  + "values (seq_board_no.nextval, ?, ?, ?, ?, ?, 0, sysdate)";
 			pstmt = conn.prepareStatement(query);
-
-			pstmt.setString(1, vo.getTitle());
-			pstmt.setString(2, vo.getContent());
-			pstmt.setInt(3, vo.getUser_no());
+			pstmt.setInt(1, vo.getUser_no());
+			pstmt.setString(2, vo.getTitle());
+			pstmt.setString(3, vo.getContent());
+			pstmt.setString(4, vo.getFilename());
+			pstmt.setString(5, vo.getNew_filename());
 			count = pstmt.executeUpdate();
 
 			// 4.결과처리
@@ -327,14 +328,6 @@ public class BoardDaoImpl implements BoardDao {
 
 		    }
 	}
-	
-	
-	
-	
-	
-	
-	
-	
 	
 	//총게시물수
 	public int getTotalCount(String keyField, String keyWord) {
