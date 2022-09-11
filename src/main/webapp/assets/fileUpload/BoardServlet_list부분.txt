@@ -1,0 +1,94 @@
+@WebServlet("/board")
+public class BoardServlet extends HttpServlet {
+	private static final long serialVersionUID = 1L;
+
+	String savePagenum ; 
+	
+	protected void doGet(HttpServletRequest request, HttpServletResponse response)throws ServletException, IOException {
+		
+		request.setCharacterEncoding("UTF-8");
+		String actionName = request.getParameter("a");
+		System.out.println("board:" + actionName);
+
+		int totalRecord = 0; // 전체 레코드 수
+		int numPerPage = 10; // 페이지당 레코드 수
+
+		request.setAttribute("numPerPage", numPerPage);
+
+		int pagePerBlock = 10; // 블럭당 페이지수
+
+		request.setAttribute("pagePerBlock", pagePerBlock);
+
+		int totalPage = 0; // 전체 페이지 수
+		int totalBlock = 0; // 전체 블럭 수
+
+		int nowPage = 1; // 현재 페이지
+		if (request.getParameter("nowPage") != null) {
+			nowPage = Integer.parseInt(request.getParameter("nowPage")); // readfrm 에서 가져오는 거
+		}
+
+		request.setAttribute("nowPage", nowPage);
+		int nowBlock = 1; // 현재블럭
+
+		int start = 0; 
+		int end = 10; 
+
+		int listSize = 0; // 현재 읽어온 게시물의 수
+
+		String keyWord = "";
+		String keyField = "";
+
+		if (request.getParameter("reload") != null) {
+			if (request.getParameter("reload").equals("true")) {
+				keyWord = "";
+				keyField = "";
+			}
+		}
+		
+		if (request.getParameter("keyWord") != null) { 
+			keyWord = request.getParameter("keyWord");
+			keyField = request.getParameter("keyField");
+
+		}
+
+		start = (nowPage * numPerPage) - numPerPage; 
+		end = numPerPage; 
+
+		BoardDao dao = new BoardDaoImpl();
+		totalRecord = dao.getTotalCount(keyField, keyWord);  // 전체 게시물 수
+		request.setAttribute("totalRecord", totalRecord);
+		
+		totalPage = (int) Math.ceil((double) totalRecord / numPerPage); // 전체페이지수
+		request.setAttribute("totalPage", totalPage);
+		
+		nowBlock = (int) Math.ceil((double) nowPage / pagePerBlock); // 현재블럭 계산
+		request.setAttribute("nowBlock", nowBlock);
+		
+		totalBlock = (int) Math.ceil((double) totalPage / pagePerBlock); // 전체블럭계산
+		request.setAttribute("totalBlock", totalBlock);
+
+		int pageStart = (nowBlock - 1) * pagePerBlock + 1; // 하단 페이지 시작번호
+		request.setAttribute("pageStart", pageStart);
+
+		int pageEnd = ((pageStart + pagePerBlock) <= totalPage) ? (pageStart + pagePerBlock - 1) : totalPage;
+		// 하단 페이지 끝번호
+		request.setAttribute("pageEnd", pageEnd);
+		
+		if ("list".equals(actionName)) {
+			//현재 몇번째 메이지인지 페이지 값 저장하기 위한 처리
+			//두번째 페이지에서 글 목록 눌렀을때 두번째 페이지로 되돌아가기위해서!
+			savePagenum =Integer.toString(nowPage);
+			
+			// 리스트 가져오기
+			List<BoardVo> list = dao.getList(keyField, keyWord, start, end);
+			request.setAttribute("list", list);
+			request.setAttribute("keyField", keyField);
+			request.setAttribute("keyWord", keyWord);
+			
+			System.out.println("list:" + list.toString());
+			listSize = list.size();
+			System.out.println("listSize:" + listSize);
+			
+			System.out.println("완료");
+			WebUtil.forward(request, response, "/WEB-INF/views/board/list.jsp");
+	    

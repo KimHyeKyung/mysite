@@ -2,10 +2,6 @@
 	pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn"%>
-<%
-pageContext.setAttribute( "newLine", "\n" );
-%>
-
 <!DOCTYPE html>
 <html>
 <head>
@@ -15,8 +11,9 @@ pageContext.setAttribute( "newLine", "\n" );
 <title>Mysite</title>
 <script type="text/javascript">
 	function down(filename){
-		 document.downFrm.filename.value=filename;
-		 document.downFrm.submit();
+		alert(filename);
+		document.downFrm.filename.value=filename;
+		document.downFrm.submit();
 	}
 </script>
 </head>
@@ -46,10 +43,10 @@ pageContext.setAttribute( "newLine", "\n" );
 						<td>
 							<c:if test="${boardVo.filename1 != null || boardVo.filename2 != null}">
 								<p>
-									<a href="javascript:down(${boardVo.filename1})">${boardVo.filename1}</a>
+									<a href="javascript:down('${boardVo.filename1}')">${boardVo.filename1}</a>
 								</p>
 								<p style="margin-top: 5px;">
-									<a href="javascript:down(${boardVo.filename2})">${boardVo.filename2}</a>
+									<a href="javascript:down('${boardVo.filename2}')">${boardVo.filename2}</a>
 								</p>
 							</c:if>
 							<c:if test="${boardVo.filename1 == null || boardVo.filename2 == null}">
@@ -75,8 +72,7 @@ pageContext.setAttribute( "newLine", "\n" );
 			</div>
 		</div>
 		<form name="downFrm" action="/mysite/downLoad" method="post">
-			<input type="hidden" name="filename1">
-			<input type="hidden" name="filename2">
+			<input type="hidden" name="filename">
 		</form>
 		<c:import url="/WEB-INF/views/includes/footer.jsp"></c:import>
 
