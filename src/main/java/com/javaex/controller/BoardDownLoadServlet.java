@@ -1,9 +1,6 @@
 package com.javaex.controller;
 
-import java.io.BufferedInputStream;
-import java.io.BufferedOutputStream;
 import java.io.File;
-import java.io.FileInputStream;
 import java.io.IOException;
 import java.net.URLEncoder;
 
@@ -17,9 +14,7 @@ import javax.servlet.http.HttpServletResponse;
 public class BoardDownLoadServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	
-	private static final String CHARSET = "UTF-8";
 	private static final String ATTACHES_DIR = "D:\\javaStudy\\workspace\\mysite\\src\\main\\webapp\\assets\\fileUpload\\";
-	private static final int LIMIT_SIZE_BYTES = 1024 * 1024;
 	
 	@Override
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {

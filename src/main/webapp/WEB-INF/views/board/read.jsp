@@ -11,7 +11,6 @@
 <title>Mysite</title>
 <script type="text/javascript">
 	function down(filename){
-		alert(filename);
 		document.downFrm.filename.value=filename;
 		document.downFrm.submit();
 	}
