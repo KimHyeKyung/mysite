@@ -79,6 +79,7 @@ function check() { // 검색어 입력 여부 확인
 								<option value="reg_date">작성일</option>
 								<option value="title">제 목</option>
 								<option value="content">내 용</option>
+								<option value="attach">첨 부</option>
 							</select>
 							<input size="16" name="keyWord" value="">
 							<input type="button" value="찾기" onClick="javascript:check()">
@@ -105,7 +106,7 @@ function check() { // 검색어 입력 여부 확인
 							<td><c:if test="${authUser.no == vo.user_no}">
 									<a href="/mysite/board?a=delete&no=${vo.no}" class="del">삭제</a>
 								</c:if>
-								</td>
+							</td>
 						</tr>
 					</c:forEach>
 				</table>
