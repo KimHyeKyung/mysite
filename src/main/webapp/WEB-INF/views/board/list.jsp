@@ -119,7 +119,17 @@
 					<c:forEach var="vo" items="${list}" begin="0" step="1" end="${numPerPage}">
 						<tr>
 							<td>${vo.no}</td>
-							<td><a href="/mysite/board?a=read&no=${vo.no}">${vo.title}</a></td>
+							<td>
+								<c:if test="${vo.depth > 0}">
+									<c:forEach var="cur" begin="0" end="${vo.depth}">
+										&nbsp;&nbsp;
+									</c:forEach>
+								</c:if>
+								<c:if test="${vo.depth != 0}">
+									┗
+								</c:if>
+								<a href="/mysite/board?a=read&no=${vo.no}&nowPage=${savePagenum}&ref=${vo.ref}&pos=${vo.pos}">${vo.title}</a>
+							</td>
 							<td>${vo.user_name}</td>
 							<td>${vo.hit}</td>
 							<td>${vo.reg_date}</td>
@@ -134,15 +144,15 @@
 				<ul>
 					<c:if test="${not empty totalPage}">
 							<c:if test="${nowBlock > 1}">
-								<a href="javascript:block(${nowBlock-1});">이전</a>
+								<a href="javascript:block(${nowBlock-1});" style="text-decoration:none">이전</a>
 							</c:if>&nbsp;   
 	  		    			  		
-    					<c:forEach var="cur" begin="${pageStart}" end="${pageEnd}">
-								<a href="javascript:pageing(${cur});">[${cur}] </a>
+    						<c:forEach var="cur" begin="${pageStart}" end="${pageEnd}">
+								<a href="javascript:pageing(${cur});" style="text-decoration:none">[${cur}] </a>
 							</c:forEach>&nbsp;
 			  		    			  		
    						<c:if test="${totalBlock > nowBlock}">
-								<a href="javascript:block(${nowBlock+1});">다음</a>
+								<a href="javascript:block(${nowBlock+1});" style="text-decoration:none">다음</a>
 							</c:if>&nbsp;
     			    </c:if>
 				</ul>

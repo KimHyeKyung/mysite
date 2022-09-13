@@ -66,7 +66,7 @@
 					<c:if test="${authUser.no == boardVo.user_no}">
 						<a href="/mysite/board?a=modifyform&no=${boardVo.no}&nowPage=${savePagenum}">글수정</a>
 					</c:if>
-					<a href="/mysite/board?a=replyform&nowPage=${savePagenum}">답변</a>
+					<a href="/mysite/board?a=replyform&nowPage=${savePagenum}&no=${boardVo.no}">답변</a>
 				</div>
 			</div>
 		</div>

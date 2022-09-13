@@ -91,6 +91,23 @@ public class BoardVo {
 		this.filename2 = filename2;
 	}
 
+	public BoardVo(int bno, String title, String content, int hit, String reg_date, int user_no, String user_name,
+			String filename1, String filename2, int ref, int pos, int depth) {
+		this.no = bno;
+		this.title = title;
+		this.content = content;
+		this.reg_date = reg_date;
+		this.user_no = user_no;
+		this.user_name = user_name;
+		this.content = content;
+		this.filename1 = filename1;
+		this.filename2 = filename2;
+		this.ref = ref;
+		this.pos = pos;
+		this.depth = depth;
+		
+	}
+
 	public int getNo() {
 		return no;
 	}

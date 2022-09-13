@@ -101,15 +101,15 @@ public class BoardServlet extends HttpServlet {
 			
 			// 리스트 가져오기
 			List<BoardVo> list = dao.getList(keyField, keyWord, start, end);
+			
+			// 게시물 화면에 보내기
 			request.setAttribute("list", list);
 			request.setAttribute("keyField", keyField);
 			request.setAttribute("keyWord", keyWord);
 			
 			System.out.println("list:" + list.toString());
 			listSize = list.size();
-			System.out.println("listSize:" + listSize);
 			
-			System.out.println("완료");
 			WebUtil.forward(request, response, "/WEB-INF/views/board/list.jsp");
 	    
 		} else if ("read".equals(actionName)) {
@@ -183,17 +183,32 @@ public class BoardServlet extends HttpServlet {
 			// 로그인 여부체크
 			UserVo authUser = getAuthUser(request);
 			if (authUser != null) { // 로그인했으면 작성페이지로
+				// 게시물 가져오기
+				int no = Integer.parseInt(request.getParameter("no"));
+				BoardVo boardVo = dao.getBoard(no);
+				
+				// 게시물 화면에 보내기
+				request.setAttribute("boardVo", boardVo);
+				
 				WebUtil.forward(request, response, "/WEB-INF/views/board/replyform.jsp");
 			} else { // 로그인 안했으면 리스트로
 				WebUtil.redirect(request, response, "/mysite/board?a=list");
 			}
 			
 		} else if ("reply".equals(actionName)) {
-			int no = Integer.parseInt(request.getParameter("no"));
-			//dao.delete(no);
+			BoardVo boardVo = new BoardVo();
+			boardVo.setUser_name(request.getParameter("name"));
+			boardVo.setUser_no(Integer.parseInt(request.getParameter("user_no")));
+			boardVo.setTitle(request.getParameter("title"));
+			boardVo.setContent(request.getParameter("content"));
+			boardVo.setRef(Integer.parseInt(request.getParameter("ref"))); 
+			boardVo.setPos(Integer.parseInt(request.getParameter("pos"))); 
+			boardVo.setDepth(Integer.parseInt(request.getParameter("depth"))); 
+			
+			dao.replyUpBoard(boardVo.getRef(), boardVo.getPos());
+			dao.replyBoard(boardVo);
+			
 			WebUtil.redirect(request, response, "/mysite/board?a=list");
-			
-			
 			
 		} else {
 			WebUtil.redirect(request, response, "/mysite/board?a=list");
