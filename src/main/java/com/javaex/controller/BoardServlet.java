@@ -147,7 +147,7 @@ public class BoardServlet extends HttpServlet {
 			
 			dao.update(vo);
 			
-			WebUtil.redirect(request, response, "/mysite/board?a=list");
+			WebUtil.redirect(request, response, "/mysite/board?a=list&nowPage="+savePagenum);
 		} else if ("writeform".equals(actionName)) {
 			// 로그인 여부체크
 			UserVo authUser = getAuthUser(request);
@@ -179,6 +179,22 @@ public class BoardServlet extends HttpServlet {
 
 			WebUtil.redirect(request, response, "/mysite/board?a=list");
 
+		} else if ("replyform".equals(actionName)) {
+			// 로그인 여부체크
+			UserVo authUser = getAuthUser(request);
+			if (authUser != null) { // 로그인했으면 작성페이지로
+				WebUtil.forward(request, response, "/WEB-INF/views/board/replyform.jsp");
+			} else { // 로그인 안했으면 리스트로
+				WebUtil.redirect(request, response, "/mysite/board?a=list");
+			}
+			
+		} else if ("reply".equals(actionName)) {
+			int no = Integer.parseInt(request.getParameter("no"));
+			//dao.delete(no);
+			WebUtil.redirect(request, response, "/mysite/board?a=list");
+			
+			
+			
 		} else {
 			WebUtil.redirect(request, response, "/mysite/board?a=list");
 		}

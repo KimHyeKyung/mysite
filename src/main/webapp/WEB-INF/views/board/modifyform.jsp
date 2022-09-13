@@ -29,6 +29,13 @@
 							<td><input type="text" name="title" value="${boardVo.title}"></td>
 						</tr>
 						<tr>
+							<td class="label">파일</td>
+							<td>
+								<div>${boardVo.filename1}</div>
+								<div>${boardVo.filename2}</div>
+							</td>
+						</tr>
+						<tr>
 							<td class="label">내용</td>
 							<td>
 								<textarea id="content" name="content">${boardVo.content}</textarea>

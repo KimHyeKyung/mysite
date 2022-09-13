@@ -161,6 +161,7 @@ public class BoardDaoImpl implements BoardDao {
 			rs = pstmt.executeQuery();
 			// 4.결과처리
 			while (rs.next()) {
+				int bno = rs.getInt("no");
 				String title = rs.getString("title");
 				String content = rs.getString("content");
 				int hit = rs.getInt("hit");
@@ -170,7 +171,7 @@ public class BoardDaoImpl implements BoardDao {
 				String filename1 = rs.getString("filename1");
 				String filename2 = rs.getString("filename2");
 				
-				boardVo = new BoardVo(no, title, content, hit, reg_date, user_no, user_name, filename1, filename2);
+				boardVo = new BoardVo(bno, title, content, hit, reg_date, user_no, user_name, filename1, filename2);
 			}
 			
 		} catch (SQLException e) {

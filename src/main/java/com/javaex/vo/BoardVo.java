@@ -79,7 +79,8 @@ public class BoardVo {
 		this.new_filename2 = new_filename2;
 	}
 
-	public BoardVo(int no, String title, String content, int hit, String reg_date, int user_no, String user_name, String filename1, String filename2) {
+	public BoardVo(int bno, String title, String content, int hit, String reg_date, int user_no, String user_name, String filename1, String filename2) {
+		this.no = bno;
 		this.title = title;
 		this.content = content;
 		this.reg_date = reg_date;
