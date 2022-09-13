@@ -1,59 +1,78 @@
-<%@page import="com.javaex.dao.BoardDaoImpl"%>
-<%@page import="com.javaex.dao.BoardDao"%>
-<%@page import="com.javaex.vo.BoardVo"%>
-<%@page import="java.util.List"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
-<%
-      request.setCharacterEncoding("UTF-8");
-%>
 <!DOCTYPE html>
 <html>
 <head>
 <meta http-equiv="content-type" content="text/html; charset=utf-8">
 <link href="/mysite/assets/css/board.css" rel="stylesheet" type="text/css">
+<script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+<link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
 <title>Mysite</title>
-<script type="text/javascript">
-function pageing(page) {
-	document.readFrm.nowPage.value = page;
-	if ('${kewWord}' != "") {
-		document.readFrm.keyWord.value = '${kewWord}';
-		document.readFrm.keyField.value = '${keyField}';
-	}
-	//document.readFrm.action = "/mysite/board";      
-	document.readFrm.submit();
-}
+<style>
 
-function block(value) {
-	var param = '${pagePerBlock}';
-	document.readFrm.nowPage.value = parseInt(param) * (value - 1) + 1; // 5 x (2 - 1) + 1 = 6
-	if ('${kewWord}' != "") {
-		document.readFrm.keyWord.value = '${kewWord}';
-		document.readFrm.keyField.value = '${keyField}';
+	#table-css{
+		margin: 0 auto;
 	}
-	document.readFrm.submit();
-}
-function check() { // 검색어 입력 여부 확인
-	if (document.searchFrm.keyWord.value == "") {
-		alert("검색어를 입력하세요.");
-		document.searchFrm.keyWord.focus();
-		return;
-	}else{
+
+	#td-css {
+		width: 253px;
+		display: flex;
+		flex-wrap: nowrap;
+		align-items: stretch;
+		justify-content: space-around;
+	}
+</style>
+<script type="text/javascript">
+	$(document).ready(function() {
+		$("#datepicker").datepicker({
+			dateFormat: 'yy-mm-dd' //Input Display Format 변경
+		 });
+		$("#datepicker").hide();
+		//초기값을 오늘 날짜로 설정
+		$('#datepicker').datepicker('setDate', 'today');
+
+		$('#keyField').focusout(function() {
+			if (this.value == "reg_date") {
+				$("#input_keyWord").hide();
+				$("#datepicker").show();
+			}
+		});
+
+	});
+
+	function pageing(page) {
+		document.readFrm.nowPage.value = page;
+		if ('${kewWord}' != "") {
+			document.readFrm.keyWord.value = '${kewWord}';
+			document.readFrm.keyField.value = '${keyField}';
+		}
+		document.readFrm.submit();
+	}
+
+	function block(value) {
+		var param = '${pagePerBlock}';
+		document.readFrm.nowPage.value = parseInt(param) * (value - 1) + 1; // 5 x (2 - 1) + 1 = 6
+		if ('${kewWord}' != "") {
+			document.readFrm.keyWord.value = '${kewWord}';
+			document.readFrm.keyField.value = '${keyField}';
+		}
+		document.readFrm.submit();
+	}
+	function check() { // 검색어 입력 여부 확인
 		if (document.searchFrm.keyField.value == "reg_date") {
-			//만약 '/' 문자를 가지고 있지 않으면 -1을 반환한다.  
-			var keyWordValue = document.searchFrm.keyWord.value;
-			substring = "/";
-			var res = keyWordValue.indexOf(substring);
-			console.log(res);
-			if (res == -1) {
-				alert("YY/MM/DD의 형식으로 입력해주세요.")
+			document.searchFrm.keyWord.value = $("#datepicker").val();
+			alert( $("#datepicker").val());
+		}else{
+			if (document.searchFrm.keyWord.value == "") {
+				alert("검색어를 입력하세요.");
+				document.searchFrm.keyWord.focus();
 				return;
 			}
 		}
+		document.searchFrm.action = "/mysite/board?a=list";
+		document.searchFrm.submit();
 	}
-	document.searchFrm.action = "/mysite/board?a=list";
-	document.searchFrm.submit();
-}
 
 	function read(num) {
 		document.readFrm.num.value = num;
@@ -71,17 +90,18 @@ function check() { // 검색어 입력 여부 확인
 		<div id="content">
 			<div id="board">
 				<form id="searchFrm" name="searchFrm" method="post" action="/mysite/board">
-					<table width="600" cellpadding="4" cellspacing="0">
+					<table id="table-css" cellpadding="4" cellspacing="0">
 						<tr>
-							<td align="center" valign="bottom">
-							<select name="keyField" size="1">
+							<td align="center" valign="bottom" id="td-css">
+							<select name="keyField" size="1" id="keyField">
 								<option value="name">글쓴이</option>
 								<option value="reg_date">작성일</option>
 								<option value="title">제 목</option>
 								<option value="content">내 용</option>
 								<option value="attach">첨 부</option>
 							</select>
-							<input size="16" name="keyWord" value="">
+							<input size="16" type="text" id="datepicker" style="height: 10px; border-color:black; ">
+							<input size="16" name="keyWord" value="" id="input_keyWord">
 							<input type="button" value="찾기" onClick="javascript:check()">
 							<input type="hidden" name="nowPage" value="1"></td>
 						</tr>
@@ -147,4 +167,3 @@ function check() { // 검색어 입력 여부 확인
 	</div><!-- /container -->
 </body>
 </html>		
-		

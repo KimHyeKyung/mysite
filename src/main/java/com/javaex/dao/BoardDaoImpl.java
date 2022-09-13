@@ -45,7 +45,7 @@ public class BoardDaoImpl implements BoardDao {
 				pstmt.setInt(1, start);
 		        pstmt.setInt(2, end);
 		        pstmt.setInt(3, start);
-				} else {
+				} else{
 					if(keyField.equals("attach")) {
 						String query =  "SELECT B.* \r\n" 
 										+"FROM( \r\n"
@@ -62,6 +62,21 @@ public class BoardDaoImpl implements BoardDao {
 						pstmt.setInt(3, start);
 						pstmt.setInt(4, end);
 						pstmt.setInt(5, start);
+					}else if(keyField.equals("reg_date")) {
+						String query =  "SELECT B.* \r\n" 
+										+"FROM( \r\n"
+										+"		SELECT ROWNUM AS RNUM, A.* \r\n"
+										+"	  	FROM (	select b.no, b.title, b.hit, to_char(b.reg_date,'yy-mm-dd hh24:mi') reg_date, b.user_no, b.pos, b.ref, b.depth, u.name \r\n"
+										+"				from board b, users u	\r\n"
+										+"				where to_char(b.reg_date,'YYYY-MM-DD HH24:MI') like ? and b.user_no = u.NO  order by b.reg_date desc) A	\r\n"
+										+"	  	WHERE ROWNUM <= ?+?	\r\n"
+										+"	      )B	\r\n"
+										+"WHERE B.RNUM > ?	\r\n";
+						pstmt = conn.prepareStatement(query);
+						pstmt.setString(1, "%" + keyWord + "%");
+						pstmt.setInt(2, start);
+						pstmt.setInt(3, end);
+						pstmt.setInt(4, start);
 					}else {
 						String query =  "SELECT B.* \r\n" 
 										+"FROM( \r\n"
@@ -369,6 +384,10 @@ public class BoardDaoImpl implements BoardDao {
 					pstmt = conn.prepareStatement(sql);
 					pstmt.setString(1, "%" + keyWord + "%");
 					pstmt.setString(2, "%" + keyWord + "%");
+				}else if(keyField.equals("reg_date")) {
+					sql = "select count(*) from  Board b, users u where b.user_no = u.NO and to_char(b.reg_date,'YYYY-MM-DD HH24:MI') like ? ";
+					pstmt = conn.prepareStatement(sql);
+					pstmt.setString(1, "%" + keyWord + "%");
 				}else {
 					sql = "select count(*) from  Board b, users u where b.user_no = u.NO and " + keyField + " like ? ";
 					pstmt = conn.prepareStatement(sql);
