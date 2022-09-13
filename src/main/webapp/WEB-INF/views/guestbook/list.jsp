@@ -1,7 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ page import="com.javaex.dao.GuestbookDao"%>
-<%@ page import="com.javaex.dao.GusetbookDaoImpl"%>
+<%@ page import="com.javaex.dao.GuestbookDaoImpl"%>
 <%@ page import="com.javaex.vo.GuestbookVo"%>
 <%@ page import="java.util.*"%>
 <!DOCTYPE html>
@@ -44,10 +44,10 @@
 							<!-- 방명록 리스트 -->
 							<%-- list에서 하나씩 빼서 테이블를 채운다--%>
 							<%
-							GuestbookDao dao = new GusetbookDaoImpl();
-							List<GuestbookVo> list = dao.getList();      
-						      for(GuestbookVo vo : list) {
-						  	%>
+							GuestbookDao dao = new GuestbookDaoImpl();
+												List<GuestbookVo> list = dao.getList();      
+											      for(GuestbookVo vo : list) {
+							%>
 							<table width="100%" border=1>
 								<tr>
 									<td style="text-align: center;">[<%=vo.getNo()%>]</td>

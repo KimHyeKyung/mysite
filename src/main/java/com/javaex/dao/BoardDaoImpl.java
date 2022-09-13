@@ -318,6 +318,7 @@ public class BoardDaoImpl implements BoardDao {
 
 		return count;
 	}
+	
 	// 조회수 증가
 	public void upCount(int num) {
 		Connection conn = null;

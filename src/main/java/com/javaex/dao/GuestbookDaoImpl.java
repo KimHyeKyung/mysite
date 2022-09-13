@@ -10,11 +10,11 @@ import java.util.List;
 import com.javaex.vo.GuestbookVo;
 
 
-public class GusetbookDaoImpl implements GuestbookDao {
+public class GuestbookDaoImpl implements GuestbookDao {
 
 	private DBConnectionMgr pool;
 
-	public GusetbookDaoImpl() {
+	public GuestbookDaoImpl() {
 		try {
 			pool = DBConnectionMgr.getInstance();
 		} catch (Exception e) {

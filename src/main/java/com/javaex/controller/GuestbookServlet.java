@@ -11,7 +11,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import com.javaex.dao.GuestbookDao;
-import com.javaex.dao.GusetbookDaoImpl;
+import com.javaex.dao.GuestbookDaoImpl;
 import com.javaex.vo.GuestbookVo;
 
 @WebServlet("/gb")
@@ -30,7 +30,7 @@ public class GuestbookServlet extends HttpServlet {
 			String password = request.getParameter("password");
 			String content = request.getParameter("content");
 
-			GuestbookDao dao = new GusetbookDaoImpl();
+			GuestbookDao dao = new GuestbookDaoImpl();
 			GuestbookVo vo = new GuestbookVo(name, password, content);
 			dao.insert(vo);
 
@@ -48,7 +48,7 @@ public class GuestbookServlet extends HttpServlet {
 			vo.setNo(no);
 			vo.setPassword(password);
 
-			GuestbookDao dao = new GusetbookDaoImpl();
+			GuestbookDao dao = new GuestbookDaoImpl();
 			int count = dao.delete(vo);
 			if(count > 0){
 				response.sendRedirect("/mysite/gb");
@@ -57,7 +57,7 @@ public class GuestbookServlet extends HttpServlet {
 				rd.forward(request, response);
 			}
 		} else {
-			GuestbookDao dao = new GusetbookDaoImpl();
+			GuestbookDao dao = new GuestbookDaoImpl();
 			List<GuestbookVo> list = dao.getList();
 
 			request.setAttribute("list", list);
