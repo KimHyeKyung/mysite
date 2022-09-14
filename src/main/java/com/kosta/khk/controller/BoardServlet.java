@@ -95,7 +95,7 @@ public class BoardServlet extends HttpServlet {
 		request.setAttribute("pageEnd", pageEnd);
 				
 		if ("list".equals(actionName)) {
-			//현재 몇번째 메이지인지 페이지 값 저장하기 위한 처리
+			//현재 몇번째 페이지인지 페이지 값 저장하기 위한 처리
 			//두번째 페이지에서 글 목록 눌렀을때 두번째 페이지로 되돌아가기위해서!
 			savePagenum =Integer.toString(nowPage);
 			

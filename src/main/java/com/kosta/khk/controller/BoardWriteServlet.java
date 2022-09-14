@@ -116,6 +116,7 @@ public class BoardWriteServlet extends HttpServlet {
 			}
 			UserVo authUser = getAuthUser(request);
 			int user_no = authUser.getNo();
+			// 게시물 화면에 보내기
 			request.setAttribute("filename1", filename1);
 			request.setAttribute("filename2", filename2);
 			

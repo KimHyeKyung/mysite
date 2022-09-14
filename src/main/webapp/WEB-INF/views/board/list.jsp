@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -127,29 +128,37 @@
 						<th>작성일</th>
 						<th>&nbsp;</th>
 					</tr>
-					<c:forEach var="vo" items="${list}" begin="0" step="1" end="${numPerPage}" varStatus="i">
-						<tr>
-							<td>${totalRecord - ((nowPage-1)*numPerPage) - i.index}</td>
-							<td>
-								<c:if test="${vo.depth > 0}">
-									<c:forEach var="cur" begin="0" end="${vo.depth}">
-										&nbsp;
-									</c:forEach>
-								</c:if>
-								<c:if test="${vo.depth != 0}">
-									┗
-								</c:if>
-								<a href="/mysite/board?a=read&no=${vo.no}&ref=${vo.ref}&pos=${vo.pos}">${vo.title}</a>
-							</td>
-							<td>${vo.user_name}</td>
-							<td>${vo.hit}</td>
-							<td>${vo.reg_date}</td>
-							<td><c:if test="${authUser.no == vo.user_no}">
-									<a href="/mysite/board?a=delete&no=${vo.no}" class="del">삭제</a>
-								</c:if>
-							</td>
-						</tr>
-					</c:forEach>
+					<tr>
+					<c:if test="${fn:length(list) == 0}">
+						<td colspan="6">조회결과가 없습니다.</td>
+					</c:if>
+					</tr>
+					
+					<c:if test="${fn:length(list) > 0}">
+						<c:forEach var="vo" items="${list}" begin="0" step="1" end="${numPerPage}" varStatus="i">
+							<tr>
+								<td>${totalRecord - ((nowPage-1)*numPerPage) - i.index}</td>
+								<td>
+									<c:if test="${vo.depth > 0}">
+										<c:forEach var="cur" begin="0" end="${vo.depth}">
+											&nbsp;
+										</c:forEach>
+									</c:if>
+									<c:if test="${vo.depth != 0}">
+										┗
+									</c:if>
+									<a href="/mysite/board?a=read&no=${vo.no}&ref=${vo.ref}&pos=${vo.pos}">${vo.title}</a>
+								</td>
+								<td>${vo.user_name}</td>
+								<td>${vo.hit}</td>
+								<td>${vo.reg_date}</td>
+								<td><c:if test="${authUser.no == vo.user_no}">
+										<a href="/mysite/board?a=delete&no=${vo.no}" class="del">삭제</a>
+									</c:if>
+								</td>
+							</tr>
+						</c:forEach>
+					</c:if>
 				</table>
 				<div class="pager">
 				<ul>
