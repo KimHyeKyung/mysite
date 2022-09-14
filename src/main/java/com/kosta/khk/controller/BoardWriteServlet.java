@@ -1,4 +1,4 @@
-package com.javaex.controller;
+package com.kosta.khk.controller;
 
 import java.io.File;
 import java.io.IOException;
@@ -16,11 +16,11 @@ import org.apache.commons.fileupload.FileItem;
 import org.apache.commons.fileupload.disk.DiskFileItemFactory;
 import org.apache.commons.fileupload.servlet.ServletFileUpload;
 
-import com.javaex.dao.BoardDao;
-import com.javaex.dao.BoardDaoImpl;
-import com.javaex.util.WebUtil;
-import com.javaex.vo.BoardVo;
-import com.javaex.vo.UserVo;
+import com.kosta.khk.dao.BoardDao;
+import com.kosta.khk.dao.BoardDaoImpl;
+import com.kosta.khk.util.WebUtil;
+import com.kosta.khk.vo.BoardVo;
+import com.kosta.khk.vo.UserVo;
 
 @WebServlet("/write")
 public class BoardWriteServlet extends HttpServlet {

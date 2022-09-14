@@ -1,4 +1,4 @@
-package com.javaex.dao;
+package com.kosta.khk.dao;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -7,7 +7,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.javaex.vo.BoardVo;
+import com.kosta.khk.vo.BoardVo;
 
 public class BoardDaoImpl implements BoardDao {
 	private DBConnectionMgr pool;

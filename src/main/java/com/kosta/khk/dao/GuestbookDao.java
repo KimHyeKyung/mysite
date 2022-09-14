@@ -1,8 +1,8 @@
-package com.javaex.dao;
+package com.kosta.khk.dao;
 
 import java.util.List;
 
-import com.javaex.vo.GuestbookVo;
+import com.kosta.khk.vo.GuestbookVo;
 
 public interface GuestbookDao {
 	

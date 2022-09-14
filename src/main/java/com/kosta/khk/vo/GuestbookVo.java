@@ -1,4 +1,4 @@
-package com.javaex.vo;
+package com.kosta.khk.vo;
 
 public class GuestbookVo {
 

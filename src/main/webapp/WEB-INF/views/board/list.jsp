@@ -127,9 +127,9 @@
 						<th>작성일</th>
 						<th>&nbsp;</th>
 					</tr>
-					<c:forEach var="vo" items="${list}" begin="0" step="1" end="${numPerPage}">
+					<c:forEach var="vo" items="${list}" begin="0" step="1" end="${numPerPage}" varStatus="i">
 						<tr>
-							<td>${vo.no}</td>
+							<td>${totalRecord - ((nowPage-1)*numPerPage) - i.index}</td>
 							<td>
 								<c:if test="${vo.depth > 0}">
 									<c:forEach var="cur" begin="0" end="${vo.depth}">

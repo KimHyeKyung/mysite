@@ -1,4 +1,4 @@
-package com.javaex.controller;
+package com.kosta.khk.controller;
 
 import java.io.File;
 import java.io.IOException;

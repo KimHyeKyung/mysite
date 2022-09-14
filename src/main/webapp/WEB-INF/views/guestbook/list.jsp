@@ -1,8 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
-<%@ page import="com.javaex.dao.GuestbookDao"%>
-<%@ page import="com.javaex.dao.GuestbookDaoImpl"%>
-<%@ page import="com.javaex.vo.GuestbookVo"%>
+<%@ page import="com.kosta.khk.dao.GuestbookDao"%>
+<%@ page import="com.kosta.khk.dao.GuestbookDaoImpl"%>
+<%@ page import="com.kosta.khk.vo.GuestbookVo"%>
 <%@ page import="java.util.*"%>
 <!DOCTYPE html>
 <html>

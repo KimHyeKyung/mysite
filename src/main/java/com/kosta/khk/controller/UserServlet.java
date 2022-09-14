@@ -1,4 +1,4 @@
-package com.javaex.controller;
+package com.kosta.khk.controller;
 
 import java.io.IOException;
 
@@ -10,10 +10,10 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import com.javaex.dao.UserDao;
-import com.javaex.dao.UserDaoImpl;
-import com.javaex.util.WebUtil;
-import com.javaex.vo.UserVo;
+import com.kosta.khk.dao.UserDao;
+import com.kosta.khk.dao.UserDaoImpl;
+import com.kosta.khk.util.WebUtil;
+import com.kosta.khk.vo.UserVo;
 
 @WebServlet("/user")
 public class UserServlet extends HttpServlet {

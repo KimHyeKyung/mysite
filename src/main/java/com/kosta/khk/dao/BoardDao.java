@@ -1,7 +1,8 @@
-package com.javaex.dao;
+package com.kosta.khk.dao;
 
 import java.util.List;
-import com.javaex.vo.BoardVo;
+
+import com.kosta.khk.vo.BoardVo;
 
 public interface BoardDao {
 	public List<BoardVo> getList(String keyField, String keyWord, int start, int end);  // 게시물 전체 목록 조회

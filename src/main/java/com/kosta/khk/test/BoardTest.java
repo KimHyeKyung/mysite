@@ -1,4 +1,4 @@
-package com.javaex.test;
+package com.kosta.khk.test;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -6,8 +6,8 @@ import java.sql.SQLException;
 
 import org.junit.jupiter.api.Test;
 
-import com.javaex.dao.DBConnectionMgr;
-import com.javaex.vo.BoardVo;
+import com.kosta.khk.dao.DBConnectionMgr;
+import com.kosta.khk.vo.BoardVo;
 
 class BoardTest {
 	private DBConnectionMgr pool;

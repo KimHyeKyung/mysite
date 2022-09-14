@@ -1,4 +1,4 @@
-package com.javaex.util;
+package com.kosta.khk.util;
 
 import java.io.IOException;
 

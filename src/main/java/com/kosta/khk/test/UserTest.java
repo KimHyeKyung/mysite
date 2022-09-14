@@ -1,4 +1,4 @@
-package com.javaex.test;
+package com.kosta.khk.test;
 
 import java.sql.Connection;
 import java.sql.DriverManager;

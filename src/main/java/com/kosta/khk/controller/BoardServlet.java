@@ -1,4 +1,4 @@
-package com.javaex.controller;
+package com.kosta.khk.controller;
 
 import java.io.IOException;
 import java.util.List;
@@ -10,11 +10,11 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import com.javaex.dao.BoardDao;
-import com.javaex.dao.BoardDaoImpl;
-import com.javaex.util.WebUtil;
-import com.javaex.vo.BoardVo;
-import com.javaex.vo.UserVo;
+import com.kosta.khk.dao.BoardDao;
+import com.kosta.khk.dao.BoardDaoImpl;
+import com.kosta.khk.util.WebUtil;
+import com.kosta.khk.vo.BoardVo;
+import com.kosta.khk.vo.UserVo;
 
 @WebServlet("/board")
 public class BoardServlet extends HttpServlet {
@@ -122,8 +122,6 @@ public class BoardServlet extends HttpServlet {
 			BoardVo boardVo = dao.getBoard(no);
 			dao.upCount(no);
 
-			System.out.println(boardVo.toString());
-
 			// 게시물 화면에 보내기
 			request.setAttribute("boardVo", boardVo);
 			WebUtil.forward(request, response, "/WEB-INF/views/board/read.jsp");
@@ -162,10 +160,6 @@ public class BoardServlet extends HttpServlet {
 			String title = request.getParameter("title");
 			String content = request.getParameter("content");
 			int user_no = authUser.getNo();
-
-			System.out.println("user_no : ["+user_no+"]");
-			System.out.println("title : ["+title+"]");
-			System.out.println("content : ["+content+"]");
 
 			BoardVo vo = new BoardVo(title, content, user_no);
 			dao.insert(vo);
