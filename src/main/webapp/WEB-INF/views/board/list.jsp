@@ -36,6 +36,9 @@
 			if (this.value == "reg_date") {
 				$("#input_keyWord").hide();
 				$("#datepicker").show();
+			}else{
+				$("#input_keyWord").show();
+				$("#datepicker").hide();
 			}
 		});
 
@@ -79,6 +82,14 @@
 		document.readFrm.action = "/mysite/board";
 		document.readFrm.submit();
 	}
+	
+	function enterEvent(e){
+		var txt = $("#input_keyWord").val();
+		if(e.keyCode == 13){
+        	document.searchFrm.keyWord.value =  txt;
+        	check();
+        }
+     }
 </script>
 </head>
 <body>
@@ -101,7 +112,7 @@
 								<option value="attach">첨 부</option>
 							</select>
 							<input size="16" type="text" id="datepicker" style="height: 10px; border-color:black; ">
-							<input size="16" name="keyWord" value="" id="input_keyWord">
+							<input size="16" name="keyWord" value="" id="input_keyWord" onkeypress="enterEvent(event)">
 							<input type="button" value="찾기" onClick="javascript:check()">
 							<input type="hidden" name="nowPage" value="1"></td>
 						</tr>
@@ -122,13 +133,13 @@
 							<td>
 								<c:if test="${vo.depth > 0}">
 									<c:forEach var="cur" begin="0" end="${vo.depth}">
-										&nbsp;&nbsp;
+										&nbsp;
 									</c:forEach>
 								</c:if>
 								<c:if test="${vo.depth != 0}">
 									┗
 								</c:if>
-								<a href="/mysite/board?a=read&no=${vo.no}&nowPage=${savePagenum}&ref=${vo.ref}&pos=${vo.pos}">${vo.title}</a>
+								<a href="/mysite/board?a=read&no=${vo.no}&ref=${vo.ref}&pos=${vo.pos}">${vo.title}</a>
 							</td>
 							<td>${vo.user_name}</td>
 							<td>${vo.hit}</td>
@@ -146,12 +157,10 @@
 							<c:if test="${nowBlock > 1}">
 								<a href="javascript:block(${nowBlock-1});" style="text-decoration:none">이전</a>
 							</c:if>&nbsp;   
-	  		    			  		
     						<c:forEach var="cur" begin="${pageStart}" end="${pageEnd}">
 								<a href="javascript:pageing(${cur});" style="text-decoration:none">[${cur}] </a>
 							</c:forEach>&nbsp;
-			  		    			  		
-   						<c:if test="${totalBlock > nowBlock}">
+   							<c:if test="${totalBlock > nowBlock}">
 								<a href="javascript:block(${nowBlock+1});" style="text-decoration:none">다음</a>
 							</c:if>&nbsp;
     			    </c:if>
