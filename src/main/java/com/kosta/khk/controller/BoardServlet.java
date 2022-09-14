@@ -202,7 +202,8 @@ public class BoardServlet extends HttpServlet {
 			dao.replyUpBoard(boardVo.getRef(), boardVo.getPos());
 			dao.replyBoard(boardVo);
 			
-			WebUtil.redirect(request, response, "/mysite/board?a=list");
+			savePagenum =Integer.toString(nowPage);
+			WebUtil.redirect(request, response, "/mysite/board?a=list&nowPage="+savePagenum);
 			
 		} else {
 			WebUtil.redirect(request, response, "/mysite/board?a=list");

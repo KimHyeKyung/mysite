@@ -133,7 +133,6 @@
 						<td colspan="6">조회결과가 없습니다.</td>
 					</c:if>
 					</tr>
-					
 					<c:if test="${fn:length(list) > 0}">
 						<c:forEach var="vo" items="${list}" begin="0" step="1" end="${numPerPage}" varStatus="i">
 							<tr>

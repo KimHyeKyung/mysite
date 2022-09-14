@@ -131,8 +131,8 @@ public class BoardWriteServlet extends HttpServlet {
 			BoardVo vo = new BoardVo(user_no, title, content, filename1, filename2, new_filename1, new_filename2);
 			BoardDao dao = new BoardDaoImpl();
 			dao.insert(vo);
-
-			WebUtil.redirect(request, response, "/mysite/board?a=list");
+			String nowPage = request.getParameter("nowPage");
+			WebUtil.redirect(request, response, "/mysite/board?a=list&nowPage="+nowPage);
 			
 			System.out.println("파일업로드완료");
 		} catch (Exception e) {
