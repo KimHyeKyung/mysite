@@ -14,6 +14,12 @@
 		document.downFrm.filename.value=filename;
 		document.downFrm.submit();
 	}
+	function checkLogin(userNo) {
+		if(userNo == null || userNo == ""){
+			alert("로그인이 필요합니다.");
+			location.href='/mysite/user?a=loginform';
+		}
+	}
 </script>
 </head>
 <body>
@@ -66,7 +72,8 @@
 					<c:if test="${authUser.no == boardVo.user_no}">
 						<a href="/mysite/board?a=modifyform&no=${boardVo.no}&nowPage=${savePagenum}">글수정</a>
 					</c:if>
-					<a href="/mysite/board?a=replyform&nowPage=${savePagenum}&no=${boardVo.no}">답변</a>
+					<a href="javascript:checkLogin('${authUser.no}');">답변</a>
+<%-- 				<a href="/mysite/board?a=replyform&nowPage=${savePagenum}&no=${boardVo.no}">답변</a> --%>
 				</div>
 			</div>
 		</div>
