@@ -13,7 +13,6 @@ import javax.servlet.http.HttpServletResponse;
 @WebServlet("/downLoad")
 public class BoardDownLoadServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-	
 	private static final String ATTACHES_DIR = "D:\\javaStudy\\workspace\\mysite\\src\\main\\webapp\\assets\\fileUpload\\";
 	
 	@Override
